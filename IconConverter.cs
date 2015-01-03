@@ -13,6 +13,7 @@ namespace FolderDesigner
                 StartInfo =
                 {
                     UseShellExecute = false,
+                    CreateNoWindow = true,
                     FileName = "png2ico.exe",
                     Arguments = "\"" + tempFile + "\" \"" + sourceImage + "\""
                 }

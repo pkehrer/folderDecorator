@@ -1,20 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace FolderDesigner.ViewModels
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
+        private readonly FolderDecorator _folderDecorator;
+
         public HomeViewModel()
         {
             SelectedMediaType = MediaType.Tv;
             ConsoleOutput = String.Empty;
+            CurrentDirectory = @"E:\TV";
+            _folderDecorator =
+                new FolderDecorator(
+                        new IconMaker(
+                        new TheTvDbRetriever(),
+                        new ImageCropper(),
+                        new ImageResizer(),
+                        new IconConverter()),
+                    new DesktopIniMaker(),
+                    new SystemFolderitizer());
         }
 
         public ICommand BrowseCommand
@@ -37,9 +52,44 @@ namespace FolderDesigner.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
-                    WriteLineToConsole("Decorate button pressed!");
+                    var bw = new BackgroundWorker();
+                    bw.WorkerReportsProgress = true;
+                    bw.DoWork += Worker_DoWork;
+                    bw.RunWorkerCompleted += Worker_WorkerCompleted;
+                    bw.ProgressChanged += worker_ProgressChanged;
+                    bw.RunWorkerAsync(Directory.GetDirectories(CurrentDirectory));
                 });
             }
+        }
+
+        void Worker_DoWork(object sender, DoWorkEventArgs args)
+        {
+            var directories = (IEnumerable<string>)args.Argument;
+            foreach (var dir in directories)
+            {
+                (sender as BackgroundWorker).ReportProgress(0, "Decorating " + dir + "...");
+                try
+                {
+                    _folderDecorator.DecorateFolder(dir);
+                    (sender as BackgroundWorker).ReportProgress(0, "Done! " + System.Environment.NewLine);
+                }
+                catch (Exception e)
+                {
+                    (sender as BackgroundWorker).ReportProgress(0, "Error: " + System.Environment.NewLine + e.Message + System.Environment.NewLine);
+                }
+            }
+            
+        }
+
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs args)
+        {
+            var message = args.UserState as string;
+            WriteToConsole(message);
+        }
+
+        void Worker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs args)
+        {
+            WriteLineToConsole("Work Complete!");
         }
 
         private string _currentDirectory;
@@ -75,11 +125,15 @@ namespace FolderDesigner.ViewModels
             }
         }
 
-        private void WriteLineToConsole(string line)
+        private void WriteToConsole(string text, params string[] values)
         {
-            ConsoleOutput += line;
-            ConsoleOutput += System.Environment.NewLine;
+            ConsoleOutput += string.Format(text, values);
             OnPropertyChanged("ConsoleOutput");
+        }
+
+        private void WriteLineToConsole(string line, params string[] values)
+        {
+            WriteToConsole(line + System.Environment.NewLine, values);
         }
 
         public string ConsoleOutput

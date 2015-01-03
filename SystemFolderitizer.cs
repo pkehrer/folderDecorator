@@ -16,7 +16,8 @@ namespace FolderDesigner
                 StartInfo =
                 {
                     UseShellExecute = false,
-                    FileName = "powershell.exe",
+                    CreateNoWindow = true,
+                    FileName = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
                     Arguments = "-Command attrib.exe +s '" + directoryPath + "'"
                 }
             };
