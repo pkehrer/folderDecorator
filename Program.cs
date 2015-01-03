@@ -5,7 +5,7 @@ namespace FolderDesigner
 {
     class Program
     {
-        static void Main(string[] args)
+        void Main(string[] args)
         {
             var folderDecorator =
                 new FolderDecorator(
