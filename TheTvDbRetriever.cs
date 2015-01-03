@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Xml;
 
@@ -10,7 +11,7 @@ namespace FolderDesigner
 
         private string GetUrlForSeriesByName(string seriesName)
         {
-            seriesName = seriesName.Replace(" ", "+");
+            
             return string.Format("{0}/api/GetSeries.php?language=en&seriesname={1}", _baseUrl, seriesName);
         }
 
@@ -30,6 +31,7 @@ namespace FolderDesigner
 
         public void FindImageByName(string seriesName, string destinationPath)
         {
+            seriesName = seriesName.Replace(" ", "+");
             var url = GetUrlForSeriesByName(seriesName);
 
             var request = WebRequest.Create(url);
@@ -43,6 +45,8 @@ namespace FolderDesigner
             var doc = new XmlDocument();
             doc.LoadXml(xmlString);
             var node = doc.DocumentElement.SelectNodes("/Data/Series").Item(0);
+            if (node == null) throw new Exception(string.Format("Couldn't find TV show with name {0}", seriesName));
+
             var bannerRelativePath = node.SelectSingleNode("banner").FirstChild.Value;
 
 

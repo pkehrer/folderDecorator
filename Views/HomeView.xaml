@@ -11,9 +11,10 @@
         <Button Content="Browse" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Width="128" Height="26" Command="{Binding BrowseCommand}"/>
         <Label Content="Media Type:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
         <ComboBox HorizontalAlignment="Left" Height="25" Margin="10,78,0,0" VerticalAlignment="Top" Width="100" ItemsSource="{Binding AllMediaTypes}" SelectedItem="{Binding SelectedMediaType}"/>
-        <Button Content="Decorate!" HorizontalAlignment="Left" Height="40" Margin="29,140,0,0" VerticalAlignment="Top" Width="390" Command="{Binding DecorateCommand}"/>
+        <Button Content="Decorate!" HorizontalAlignment="Left" Height="40" Margin="29,140,0,0" VerticalAlignment="Top" Width="195" Command="{Binding DecorateCommand}"/>
         <TextBox HorizontalAlignment="Left" Height="150" Margin="29,185,0,0" TextWrapping="Wrap" Text="{Binding ConsoleOutput}" VerticalAlignment="Top" Width="390"/>
-        
+        <Button Content="UnDecorate" HorizontalAlignment="Left" Height="40" Margin="237,140,0,0" VerticalAlignment="Top" Width="182" Command="{Binding UnDecorateCommand}"/>
+
 
 
     </Grid>

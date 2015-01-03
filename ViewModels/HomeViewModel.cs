@@ -15,6 +15,7 @@ namespace FolderDesigner.ViewModels
     public class HomeViewModel : INotifyPropertyChanged
     {
         private readonly FolderDecorator _folderDecorator;
+        private readonly FolderUndecorator _folderUndecorator;
 
         public HomeViewModel()
         {
@@ -54,15 +55,51 @@ namespace FolderDesigner.ViewModels
                 {
                     var bw = new BackgroundWorker();
                     bw.WorkerReportsProgress = true;
-                    bw.DoWork += Worker_DoWork;
-                    bw.RunWorkerCompleted += Worker_WorkerCompleted;
-                    bw.ProgressChanged += worker_ProgressChanged;
-                    bw.RunWorkerAsync(Directory.GetDirectories(CurrentDirectory));
+                    bw.DoWork += DoWork_Decorate;
+                    bw.RunWorkerCompleted += (s,a) => WriteLineToConsole("Decoration complete!");
+                    bw.ProgressChanged += ReportProgressToConsole;
+                    //bw.RunWorkerAsync(Directory.GetDirectories(CurrentDirectory));
+                    bw.RunWorkerAsync(new []{@"E:\TV\Firefly.2002.720p.BluRay.DTS.x264-ESiR"});
                 });
             }
         }
 
-        void Worker_DoWork(object sender, DoWorkEventArgs args)
+        public ICommand UnDecorateCommand
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    var bw = new BackgroundWorker();
+                    bw.WorkerReportsProgress = true;
+                    bw.DoWork += DoWork_UnDecorate;
+                    bw.RunWorkerCompleted += (s, a) => WriteLineToConsole("UnDecoration complete!");
+                    bw.ProgressChanged += ReportProgressToConsole;
+                    //bw.RunWorkerAsync(Directory.GetDirectories(CurrentDirectory));
+                    bw.RunWorkerAsync(new[] { @"E:\TV\Firefly.2002.720p.BluRay.DTS.x264-ESiR" });
+                });
+            }
+        }
+
+        void DoWork_UnDecorate(object sender, DoWorkEventArgs args)
+        {
+            var directories = (IEnumerable<string>)args.Argument;
+            foreach (var dir in directories)
+            {
+                (sender as BackgroundWorker).ReportProgress(0, "UnDecorating " + dir + "...");
+                try
+                {
+                    _folderUndecorator.UndecorateFolder(dir);
+                    (sender as BackgroundWorker).ReportProgress(0, "Done! " + System.Environment.NewLine);
+                }
+                catch (Exception e)
+                {
+                    (sender as BackgroundWorker).ReportProgress(0, "Error: " + System.Environment.NewLine + e.Message + System.Environment.NewLine);
+                }
+            }
+        }
+
+        void DoWork_Decorate(object sender, DoWorkEventArgs args)
         {
             var directories = (IEnumerable<string>)args.Argument;
             foreach (var dir in directories)
@@ -81,7 +118,7 @@ namespace FolderDesigner.ViewModels
             
         }
 
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs args)
+        void ReportProgressToConsole(object sender, ProgressChangedEventArgs args)
         {
             var message = args.UserState as string;
             WriteToConsole(message);

@@ -59,6 +59,7 @@
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="DesktopIniMaker.cs" />
     <Compile Include="FolderDecorator.cs" />
+    <Compile Include="FolderUndecorators.cs" />
     <Compile Include="MediaType.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
