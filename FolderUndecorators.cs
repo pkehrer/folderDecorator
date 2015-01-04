@@ -16,7 +16,6 @@ namespace FolderDesigner
             _attributeChanger = attributeChanger;
         }
 
-
         public void UndecorateFolder(string path)
         {
             _attributeChanger.MakeNotSystemFolder(path);
