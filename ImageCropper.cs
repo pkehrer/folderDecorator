@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FolderDesigner
 {
-    class ImageCropper
+    public class ImageCropper
     {
 
         public void CropImageSquare(string imagePath)

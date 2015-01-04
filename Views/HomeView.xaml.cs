@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Autofac;
 
 namespace FolderDesigner.Views
 {
@@ -23,8 +24,12 @@ namespace FolderDesigner.Views
     {
         public HomeView()
         {
-            DataContext = new HomeViewModel();
-            InitializeComponent();
+            var container = Module.GetContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                DataContext = new HomeViewModel(scope.Resolve<FolderDecorator>(), scope.Resolve<FolderUndecorator>());
+                InitializeComponent();
+            }
         }
     }
 }

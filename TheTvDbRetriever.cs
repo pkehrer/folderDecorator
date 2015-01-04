@@ -11,12 +11,12 @@ namespace FolderDesigner
 
         private string GetUrlForSeriesByName(string seriesName)
         {
-            
             return string.Format("{0}/api/GetSeries.php?language=en&seriesname={1}", _baseUrl, seriesName);
         }
 
         private string GetUrlForBannerByRelativePath(string bannerRelativePath)
         {
+            //return @"http://www.thetvdb.com/banners/graphical/79563-g4.jpg";
             return string.Format("{0}/banners/{1}", _baseUrl, bannerRelativePath);
         }
         public static void CopyStream(Stream input, Stream output)

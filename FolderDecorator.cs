@@ -7,28 +7,39 @@ using System.Threading.Tasks;
 
 namespace FolderDesigner
 {
-    class FolderDecorator
+    public class FolderDecorator
     {
         private readonly IconMaker _iconMaker;
-        private readonly DesktopIniMaker _desktopIniMaker;
-        private readonly SystemFolderitizer _systemFolderitizer;
-
+        private readonly FolderIconChanger _desktopIniMaker;
+        
         public FolderDecorator(
             IconMaker iconMaker, 
-            DesktopIniMaker desktopIniMaker,
-            SystemFolderitizer systemFolderitizer)
+            FolderIconChanger desktopIniMaker)
         {
             _iconMaker = iconMaker;
             _desktopIniMaker = desktopIniMaker;
-            _systemFolderitizer = systemFolderitizer;
         }
 
-        public void DecorateFolder(string directoryPath)
+        public FolderDecorationResult DecorateFolder(string directoryPath)
         {
-            var folderName = directoryPath.Substring(directoryPath.LastIndexOf(@"\")).Replace(@"\", "");
-            _iconMaker.MakeIconByName(folderName, Path.Combine(directoryPath, "foldericon.ico"));
-            _desktopIniMaker.CreateDesktopIni(directoryPath, "foldericon.ico");
-            _systemFolderitizer.MakeSystemFolder(directoryPath);
+            try
+            {
+                var folderName = directoryPath.Substring(directoryPath.LastIndexOf(@"\")).Replace(@"\", "");
+                _iconMaker.MakeIconByName(folderName, Path.Combine(directoryPath, "foldericon.ico"));
+                _desktopIniMaker.CreateDesktopIni(directoryPath, "foldericon.ico");
+                return new FolderDecorationResult
+                {
+                    Success = true,
+                    Directory = directoryPath
+                };
+            } catch (Exception e) {
+                return new FolderDecorationResult
+                {
+                    Success = false,
+                    ErrorMessage = e.Message,
+                    Directory = directoryPath
+                };
+            }
         }
 
     }

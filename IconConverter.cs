@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FolderDesigner
 {
-    class IconConverter
+    public class IconConverter
     {
         public void ConvertToIcon(string sourceImage)
         {

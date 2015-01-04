@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FolderDesigner
 {
-    interface IImageRetriever
+    public interface IImageRetriever
     {
         void FindImageByName(string name, string destinationPath);
     }

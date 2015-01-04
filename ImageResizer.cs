@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FolderDesigner
 {
-    class ImageResizer
+    public class ImageResizer
     {
         public void ResizeImage(string sourceImagePath, Size size)
         {
