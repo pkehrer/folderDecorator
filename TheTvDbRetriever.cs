@@ -5,8 +5,15 @@ using System.Xml;
 
 namespace FolderDesigner
 {
-    class TheTvDbRetriever : IImageRetriever
+    public class TheTvDbRetriever : IImageRetriever
     {
+        private readonly DirectoryNameSanitizer _sanitizer;
+
+        public TheTvDbRetriever(DirectoryNameSanitizer sanitizer)
+        {
+            _sanitizer = sanitizer;
+        }
+
         private const string _baseUrl = @"http://www.thetvdb.com";
 
         private string GetUrlForSeriesByName(string seriesName)
@@ -31,6 +38,7 @@ namespace FolderDesigner
 
         public void FindImageByName(string seriesName, string destinationPath)
         {
+            seriesName = _sanitizer.SanitizeDirectoryName(seriesName);
             seriesName = seriesName.Replace(" ", "+");
             var url = GetUrlForSeriesByName(seriesName);
 

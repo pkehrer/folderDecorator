@@ -14,6 +14,7 @@ namespace FolderDesigner
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<AttributeChanger>().SingleInstance();
+            builder.RegisterType<DirectoryNameSanitizer>().SingleInstance();
             builder.RegisterType<IconMaker>().SingleInstance();
             builder.RegisterType<TheTvDbRetriever>().As<IImageRetriever>().SingleInstance();
             builder.RegisterType<ImageCropper>().SingleInstance();
