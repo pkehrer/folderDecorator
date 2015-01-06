@@ -9,7 +9,7 @@ namespace FolderDesigner
     public enum MediaType
     {
         Tv,
-        //Movie,
+        Movie,
         //Music
     }
 }

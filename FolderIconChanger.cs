@@ -30,7 +30,7 @@ namespace FolderDesigner
             UInt32 HRESULT = SHGetSetFolderCustomSettings(ref FolderSettings, pszPath, FCS_FORCEWRITE);
 
             _attributeChanger.AddAttributes(Path.Combine(directoryPath, "desktop.ini"), FileAttributes.Hidden);
-            _attributeChanger.AddAttributes(Path.Combine(directoryPath, "foldericon.ico"), FileAttributes.Hidden);
+            //_attributeChanger.AddAttributes(Path.Combine(directoryPath, "foldericon.ico"), FileAttributes.Hidden);
 
         }
 

@@ -21,9 +21,9 @@ namespace FolderDesigner.ViewModels
 
         public HomeViewModel(FolderDecorator folderDecorator, FolderUndecorator folderUndecorator)
         {
-            SelectedMediaType = MediaType.Tv;
+            SelectedMediaType = MediaType.Movie;
             ConsoleOutput = String.Empty;
-            CurrentDirectory = @"E:\TV";
+            CurrentDirectory = @"E:\Movies";
             _folderDecorator = folderDecorator;
             _folderUndecorator = folderUndecorator;
         }
@@ -55,7 +55,7 @@ namespace FolderDesigner.ViewModels
                     bw.RunWorkerCompleted += (s, a) => WriteLineToConsole("Decoration complete!");
                     bw.ProgressChanged += ReportProgressToConsole;
                     bw.RunWorkerAsync(Directory.GetDirectories(CurrentDirectory));
-                    //bw.RunWorkerAsync(new []{@"E:\TV\Arrested Development"});
+                    //bw.RunWorkerAsync(new[] { @"E:\Movies\Super.8.2011.720p.BluRay.x264-WiKi" });
                 });
             }
         }
@@ -104,9 +104,26 @@ namespace FolderDesigner.ViewModels
             {
                 var resetEvent = new ManualResetEvent(false);
                 resetEvents.Add(resetEvent);
-                ThreadPool.QueueUserWorkItem(new WaitCallback(a =>
+
+                if (Config.Multithreaded)
                 {
-                    var result = _folderDecorator.DecorateFolder(dir);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(a =>
+                    {
+                        var result = _folderDecorator.DecorateFolder(SelectedMediaType, dir);
+                        if (result.Success)
+                        {
+                            WriteLineToConsole("Successfully decorated {0}", result.Directory);
+                        }
+                        else
+                        {
+                            WriteLineToConsole("Error decorating {0}:{1}{2}", result.Directory, Environment.NewLine, result.ErrorMessage);
+                        }
+                        resetEvent.Set();
+                    }));
+                }
+                else
+                {
+                    var result = _folderDecorator.DecorateFolder(SelectedMediaType, dir);
                     if (result.Success)
                     {
                         WriteLineToConsole("Successfully decorated {0}", result.Directory);
@@ -115,8 +132,7 @@ namespace FolderDesigner.ViewModels
                     {
                         WriteLineToConsole("Error decorating {0}:{1}{2}", result.Directory, Environment.NewLine, result.ErrorMessage);
                     }
-                    resetEvent.Set();
-                }));
+                }
             }
             WaitHandle.WaitAll(resetEvents.ToArray());
             ClearIconCache();
@@ -172,7 +188,7 @@ namespace FolderDesigner.ViewModels
         {
             lock (_syncobj)
             {
-                ConsoleOutput += string.Format(text, values);
+                ConsoleOutput += values.Any() ? string.Format(text, values) : text;
             }
             OnPropertyChanged("ConsoleOutput");
         }

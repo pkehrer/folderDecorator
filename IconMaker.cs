@@ -10,16 +10,16 @@ namespace FolderDesigner
 {
     public class IconMaker
     {
-        private readonly IImageRetriever _imageRetriever;
+        private readonly ImageRetrieverFactory _imageRetriever;
         private readonly ImageCropper _imageCropper;
         private readonly ImageResizer _imageResizer;
-        private readonly IconConverter _iconConverter;
+        private readonly IIconConverter _iconConverter;
         private readonly AttributeChanger _attributeChanger;
 
-        public IconMaker(IImageRetriever imageRetriever,
+        public IconMaker(ImageRetrieverFactory imageRetriever,
                          ImageCropper imageCropper, 
                          ImageResizer imageResizer,
-                         IconConverter iconConverter,
+                         IIconConverter iconConverter,
                          AttributeChanger attribChanger)
         {
             _imageRetriever = imageRetriever;
@@ -29,14 +29,15 @@ namespace FolderDesigner
             _attributeChanger = attribChanger;
         }
 
-        public void MakeIconByName(string name, string destinationFilePath)
+        public void MakeIconByName(MediaType mediaType, string name, string destinationFilePath)
         {
             _attributeChanger.RemoveAttributes(destinationFilePath, FileAttributes.System);
             _attributeChanger.RemoveAttributes(destinationFilePath, FileAttributes.Hidden);
-            _imageRetriever.FindImageByName(name, destinationFilePath);
+            _imageRetriever.GetImageRetriever(mediaType).FindImageByName(name, destinationFilePath);
             _imageCropper.CropImageSquare(destinationFilePath);
-            _imageResizer.ResizeImage(destinationFilePath, new Size(128, 128));
+            _imageResizer.ResizeImage(destinationFilePath, new Size(Config.IconSize, Config.IconSize));
             _iconConverter.ConvertToIcon(destinationFilePath);
+            //_imageResizer.ResizeImage(destinationFilePath, new Size(Config.FinalIconSize, Config.FinalIconSize));
         }
 
     }

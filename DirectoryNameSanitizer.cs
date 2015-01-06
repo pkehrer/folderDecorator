@@ -12,26 +12,32 @@ namespace FolderDesigner
 
         public string SanitizeDirectoryName(string directoryName)
         {
-            directoryName = ReplacePeriods(directoryName);
+            directoryName = directoryName
+                .Replace(".", " ")
+                .Replace("&", "and");
             directoryName = ChopOffDateAndTheRest(directoryName);
-            directoryName = LowerCase(directoryName);
+            directoryName = ChopOff720p1080p(directoryName);
+            directoryName = directoryName.ToLower();
+            directoryName = directoryName.Trim();
             return directoryName;
-        }
-
-        private string ReplacePeriods(string oldstring)
-        {
-            return oldstring.Replace(".", " ");
         }
 
         private string ChopOffDateAndTheRest(string oldstring)
         {
-            var indexOfDate = Regex.Match(oldstring, @"\d{4}").Index; 
-            return indexOfDate > 2 ? oldstring.Substring(0, indexOfDate) : oldstring;
+            return ChopPattern(oldstring, @"\d{4}"); 
         }
 
-        private string LowerCase(string oldstring)
+        private string ChopOff720p1080p(string oldstring)
         {
-            return oldstring.ToLower();
+            oldstring = ChopPattern(oldstring, "1080p");
+            return ChopPattern(oldstring, "720p");
+        }
+
+
+        private string ChopPattern(string oldstring, string pattern)
+        {
+            var indexOfDate = Regex.Match(oldstring, pattern).Index;
+            return indexOfDate > 2 ? oldstring.Substring(0, indexOfDate) : oldstring;
         }
 
     }

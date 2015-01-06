@@ -15,11 +15,14 @@ namespace FolderDesigner
             var builder = new ContainerBuilder();
             builder.RegisterType<AttributeChanger>().SingleInstance();
             builder.RegisterType<DirectoryNameSanitizer>().SingleInstance();
+            builder.RegisterType<WebServiceUtil>().SingleInstance();
             builder.RegisterType<IconMaker>().SingleInstance();
-            builder.RegisterType<TheTvDbRetriever>().As<IImageRetriever>().SingleInstance();
+            builder.RegisterType<TheTvDbRetriever>().SingleInstance();
+            builder.RegisterType<TheMovieDbRetriever>().SingleInstance();
+            builder.RegisterType<ImageRetrieverFactory>().SingleInstance();
             builder.RegisterType<ImageCropper>().SingleInstance();
             builder.RegisterType<ImageResizer>().SingleInstance();
-            builder.RegisterType<IconConverter>().SingleInstance();
+            builder.RegisterType<ImageMagickIconConverter>().As<IIconConverter>().SingleInstance();
             builder.RegisterType<FolderIconChanger>().SingleInstance();
             builder.RegisterType<FolderDecorator>().SingleInstance();
             builder.RegisterType<FolderUndecorator>().SingleInstance();

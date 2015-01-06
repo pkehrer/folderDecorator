@@ -20,12 +20,12 @@ namespace FolderDesigner
             _desktopIniMaker = desktopIniMaker;
         }
 
-        public FolderDecorationResult DecorateFolder(string directoryPath)
+        public FolderDecorationResult DecorateFolder(MediaType type, string directoryPath)
         {
             try
             {
                 var folderName = directoryPath.Substring(directoryPath.LastIndexOf(@"\")).Replace(@"\", "");
-                _iconMaker.MakeIconByName(folderName, Path.Combine(directoryPath, "foldericon.ico"));
+                _iconMaker.MakeIconByName(type, folderName, Path.Combine(directoryPath, "foldericon.ico"));
                 _desktopIniMaker.CreateDesktopIni(directoryPath, "foldericon.ico");
                 return new FolderDecorationResult
                 {
