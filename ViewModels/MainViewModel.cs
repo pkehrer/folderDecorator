@@ -53,6 +53,7 @@ namespace FolderDesigner.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
+                    Enabled = false;
                     ClearConsole();
                     var bw = new BackgroundWorker(Directory.GetDirectories(CurrentDirectory),
                         dir =>
@@ -64,6 +65,7 @@ namespace FolderDesigner.ViewModels
                         {
                             WriteLineToConsole("Decoration complete!");
                             _iconCacheResetter.ResetIconCache();
+                            Enabled = true;
                         });
                     bw.Run();
                 });
@@ -77,6 +79,7 @@ namespace FolderDesigner.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
+                    Enabled = false;
                     ClearConsole();
                     var bw = new BackgroundWorker(
                         Directory.GetDirectories(CurrentDirectory),
@@ -89,6 +92,7 @@ namespace FolderDesigner.ViewModels
                         {
                             WriteLineToConsole("Undecoration complete!");
                             _iconCacheResetter.ResetIconCache();
+                            Enabled = true;
                         });
                     bw.Run();
                 });
@@ -127,6 +131,13 @@ namespace FolderDesigner.ViewModels
                 _selectedMediaType = value;
                 OnPropertyChanged("SelectedMediaType");
             }
+        }
+
+        private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; OnPropertyChanged("Enabled"); }
         }
 
         private static object _syncobj = new Object();

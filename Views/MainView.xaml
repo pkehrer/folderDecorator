@@ -13,16 +13,16 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
-            <TextBox Height="26"  Width="370" Text="{Binding CurrentDirectory}"/>
-            <Button Content="Browse" Margin="15 0 0 0" Width="128" Height="26" Command="{Binding BrowseCommand}"/>
+            <TextBox Height="26"  Width="370" Text="{Binding CurrentDirectory}" IsEnabled="{Binding Enabled}"/>
+            <Button Content="Browse" Margin="15 0 0 0" Width="128" Height="26" Command="{Binding BrowseCommand}" IsEnabled="{Binding Enabled}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="15">
             <Label Content="Media Type:" Margin="53 0 0 0"/>
-            <ComboBox HorizontalAlignment="Left" Height="25" Width="115" ItemsSource="{Binding AllMediaTypes}" SelectedItem="{Binding SelectedMediaType}"/>
+            <ComboBox HorizontalAlignment="Left" Height="25" Width="115" ItemsSource="{Binding AllMediaTypes}" SelectedItem="{Binding SelectedMediaType}" IsEnabled="{Binding Enabled}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-            <Button Content="Decorate!" Height="40" Width="195" Margin="10" Command="{Binding DecorateCommand}"/>
-            <Button Content="UnDecorate" Height="40" Width="195" Margin="10" Command="{Binding UnDecorateCommand}"/>
+            <Button Content="Decorate!" Height="40" Width="195" Margin="10" Command="{Binding DecorateCommand}" IsEnabled="{Binding Enabled}"/>
+            <Button Content="UnDecorate" Height="40" Width="195" Margin="10" Command="{Binding UnDecorateCommand}" IsEnabled="{Binding Enabled}"/>
         </StackPanel>
         
         <TextBox Grid.Row="3" Text="{Binding ConsoleOutput}" Margin="10" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
