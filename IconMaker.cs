@@ -37,7 +37,6 @@ namespace FolderDesigner
             _imageCropper.CropImageSquare(destinationFilePath);
             _imageResizer.ResizeImage(destinationFilePath, new Size(Config.IconSize, Config.IconSize));
             _iconConverter.ConvertToIcon(destinationFilePath);
-            //_imageResizer.ResizeImage(destinationFilePath, new Size(Config.FinalIconSize, Config.FinalIconSize));
         }
 
     }

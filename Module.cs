@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
+using FolderDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace FolderDesigner
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<AttributeChanger>().SingleInstance();
+            builder.RegisterType<IconCacheResetter>().SingleInstance();
             builder.RegisterType<DirectoryNameSanitizer>().SingleInstance();
             builder.RegisterType<WebServiceUtil>().SingleInstance();
             builder.RegisterType<IconMaker>().SingleInstance();
@@ -26,6 +28,7 @@ namespace FolderDesigner
             builder.RegisterType<FolderIconChanger>().SingleInstance();
             builder.RegisterType<FolderDecorator>().SingleInstance();
             builder.RegisterType<FolderUndecorator>().SingleInstance();
+            builder.RegisterType<MainViewModel>();
             return builder.Build();
         }
 

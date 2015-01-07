@@ -37,6 +37,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
@@ -62,6 +65,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackgroundWorker.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="DirectoryNameSanitizer.cs" />
@@ -69,24 +73,21 @@
     <Compile Include="FolderIconChanger.cs" />
     <Compile Include="FolderDecorator.cs" />
     <Compile Include="FolderUndecorators.cs" />
+    <Compile Include="IconCacheResetter.cs" />
     <Compile Include="ImageEditing\IIconConverter.cs" />
     <Compile Include="ImageEditing\ImageMagickIconConverter.cs" />
     <Compile Include="ImageRetrieval\ImageRetrieverFactory.cs" />
     <Compile Include="MediaType.cs" />
     <Compile Include="Module.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="ImageRetrieval\TheMovieDbRetriever.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="Views\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ImageEditing\SimpleIconConverter.cs" />
     <Compile Include="IconMaker.cs" />
     <Compile Include="ImageRetrieval\IImageRetriever.cs" />
     <Compile Include="ImageEditing\ImageCropper.cs" />
     <Compile Include="ImageEditing\ImageResizer.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AttributeChanger.cs" />
@@ -104,6 +105,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="ImageMagick\atl100.dll" />
     <Content Include="ImageMagick\ChangeLog.txt" />
     <Content Include="ImageMagick\coder.xml" />
@@ -1293,11 +1295,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Views\HomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

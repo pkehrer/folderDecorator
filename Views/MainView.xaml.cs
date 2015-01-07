@@ -17,17 +17,14 @@ using Autofac;
 
 namespace FolderDesigner.Views
 {
-    /// <summary>
-    /// Interaction logic for HomeView.xaml
-    /// </summary>
-    public partial class HomeView : UserControl
+    public partial class MainView : Window
     {
-        public HomeView()
+        public MainView()
         {
             var container = Module.GetContainer();
             using (var scope = container.BeginLifetimeScope())
             {
-                DataContext = new HomeViewModel(scope.Resolve<FolderDecorator>(), scope.Resolve<FolderUndecorator>());
+                DataContext = scope.Resolve<MainViewModel>();
                 InitializeComponent();
             }
         }
