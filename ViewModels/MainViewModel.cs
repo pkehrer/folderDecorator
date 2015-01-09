@@ -55,7 +55,7 @@ namespace FolderDesigner.ViewModels
                 {
                     Enabled = false;
                     ClearConsole();
-                    var bw = new BackgroundWorker(Directory.GetDirectories(CurrentDirectory),
+                    var bw = new BackgroundWorker(Directory.GetDirectories(CurrentDirectory),//new string[] {@"E:\Movies\The Interview 2014 1080p WEB-DL x264 AAC"},
                         dir =>
                         {
                             var result = _folderDecorator.DecorateFolder(SelectedMediaType, dir);

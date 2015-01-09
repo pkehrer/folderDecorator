@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageMagick;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +13,17 @@ namespace FolderDesigner
     {
 
         public void ConvertToIcon(string sourceImage)
+        {
+            var tempFile = Path.GetDirectoryName(sourceImage) + @"\temp.ico";
+            using (var image = new MagickImage(sourceImage))
+            {
+                image.Write(tempFile);
+            }
+            File.Delete(sourceImage);
+            File.Move(tempFile, sourceImage);
+        }
+
+        public void ConvertToIconOld(string sourceImage)
         {
             var tempFile = Path.GetDirectoryName(sourceImage) + @"\temp.ico";
             var p = new Process

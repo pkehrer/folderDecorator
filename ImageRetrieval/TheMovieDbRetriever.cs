@@ -17,12 +17,11 @@ namespace FolderDesigner
         private const string BASE_IMG_URL = @"http://image.tmdb.org/t/p/w500";
 
         private readonly WebServiceUtil _webUtil;
-        private readonly DirectoryNameSanitizer _sanitizer;
+        
 
-        public TheMovieDbRetriever(WebServiceUtil webUtil, DirectoryNameSanitizer sanitizer)
+        public TheMovieDbRetriever(WebServiceUtil webUtil)
         {
             _webUtil = webUtil;
-            _sanitizer = sanitizer;
         }
 
         private string GetSearchUrl(string movieName)
@@ -38,7 +37,6 @@ namespace FolderDesigner
 
         public void FindImageByName(string name, string destinationPath)
         {
-            name = _sanitizer.SanitizeDirectoryName(name);
             var searchUrl = GetSearchUrl(name);
 
             var request = WebRequest.Create(searchUrl);

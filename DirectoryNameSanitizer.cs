@@ -24,6 +24,8 @@ namespace FolderDesigner
 
         private string ChopOffDateAndTheRest(string oldstring)
         {
+            oldstring = ChopPattern(oldstring, @"\[\d{4}");
+            oldstring = ChopPattern(oldstring, @"\(\d{4}");
             return ChopPattern(oldstring, @"\d{4}"); 
         }
 

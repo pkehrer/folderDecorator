@@ -7,12 +7,10 @@ namespace FolderDesigner
 {
     public class TheTvDbRetriever : IImageRetriever
     {
-        private readonly DirectoryNameSanitizer _sanitizer;
         private readonly WebServiceUtil _webUtil;
 
-        public TheTvDbRetriever(DirectoryNameSanitizer sanitizer, WebServiceUtil webUtil)
+        public TheTvDbRetriever(WebServiceUtil webUtil)
         {
-            _sanitizer = sanitizer;
             _webUtil = webUtil;
         }
 
@@ -25,14 +23,12 @@ namespace FolderDesigner
 
         private string GetUrlForBannerByRelativePath(string bannerRelativePath)
         {
-            //return @"http://www.thetvdb.com/banners/graphical/79563-g4.jpg";
             return string.Format("{0}/banners/{1}", _baseUrl, bannerRelativePath);
         }
 
 
         public void FindImageByName(string seriesName, string destinationPath)
         {
-            seriesName = _sanitizer.SanitizeDirectoryName(seriesName);
             seriesName = seriesName.Replace(" ", "+");
             var url = GetUrlForSeriesByName(seriesName);
 

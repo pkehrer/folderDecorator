@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,8 @@ namespace FolderDesigner
         public override string ToString()
         {
             return Success 
-                ? string.Format("Successfully decorated {0}", Directory)
-                : string.Format("Error decorating {0}:{1}{2}", Directory, Environment.NewLine, ErrorMessage);
+                ? string.Format("Successfully decorated {0}", Path.GetFileName(Directory))
+                : string.Format("Error decorating {0}:{1}{2}", Path.GetFileName(Directory), Environment.NewLine, ErrorMessage);
         }
 
     }
