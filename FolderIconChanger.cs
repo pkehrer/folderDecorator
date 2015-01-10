@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -8,7 +6,7 @@ namespace FolderDesigner
 {
     public class FolderIconChanger
     {
-        private readonly AttributeChanger _attributeChanger;
+        readonly AttributeChanger _attributeChanger;
 
         public FolderIconChanger(AttributeChanger attribChanger)
         {
@@ -30,8 +28,6 @@ namespace FolderDesigner
             UInt32 HRESULT = SHGetSetFolderCustomSettings(ref FolderSettings, pszPath, FCS_FORCEWRITE);
 
             _attributeChanger.AddAttributes(Path.Combine(directoryPath, "desktop.ini"), FileAttributes.Hidden);
-            //_attributeChanger.AddAttributes(Path.Combine(directoryPath, "foldericon.ico"), FileAttributes.Hidden);
-
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Auto)]
@@ -57,7 +53,4 @@ namespace FolderDesigner
             public UInt32 cchLogo;
         }
     }
-
-
-
 }

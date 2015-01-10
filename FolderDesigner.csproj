@@ -80,6 +80,7 @@
     <Compile Include="ImageEditing\IIconConverter.cs" />
     <Compile Include="ImageEditing\ImageMagickIconConverter.cs" />
     <Compile Include="ImageRetrieval\ImageRetrieverFactory.cs" />
+    <Compile Include="ImageRetrieval\LastFmRetriever.cs" />
     <Compile Include="MediaType.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="ImageRetrieval\TheMovieDbRetriever.cs" />
@@ -106,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="vcredist_x64.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -120,7 +124,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\NSIS\Bin\makensis.exe" $(ProjectDir)$(OutDir)installscript.nsi</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

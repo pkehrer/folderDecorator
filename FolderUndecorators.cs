@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace FolderDesigner
 {
     public class FolderUndecorator
     {
-        private AttributeChanger _attributeChanger;
+        readonly AttributeChanger _attributeChanger;
 
         public FolderUndecorator(AttributeChanger attributeChanger)
         {
@@ -26,6 +21,5 @@ namespace FolderDesigner
             File.Delete(foldericonPath);
             File.Delete(sourceImagePath);
         }
-
     }
 }

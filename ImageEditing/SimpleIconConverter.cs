@@ -1,32 +1,10 @@
-﻿
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 using System.IO;
 
-namespace FolderDesigner
+namespace FolderDesigner.ImageEditing
 {
     public class SimpleIconConverter : IIconConverter
     {
-        public void ConvertToIconOLD(string sourceImage)
-        {
-            var tempFile = Path.GetDirectoryName(sourceImage) + @"\temp.ico";
-            var p = new Process
-            {
-                StartInfo =
-                {
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    FileName = "png2ico.exe",
-                    Arguments = "\"" + tempFile + "\" \"" + sourceImage + "\""
-                }
-            };
-            p.Start();
-            p.WaitForExit();
-            File.Delete(sourceImage);
-            File.Move(tempFile, sourceImage);
-        }
-
         public void ConvertToIcon(string sourceImage)
         {
             var tempFile = Path.GetDirectoryName(sourceImage) + @"\temp.ico";
@@ -38,6 +16,5 @@ namespace FolderDesigner
             File.Delete(sourceImage);
             File.Move(tempFile, sourceImage);
         }
-
     }
 }

@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FolderDesigner.ImageEditing;
+using FolderDesigner.ImageRetrieval;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderDesigner
 {
     public class IconMaker
     {
-        private readonly ImageRetrieverFactory _imageRetriever;
-        private readonly ImageCropper _imageCropper;
-        private readonly ImageResizer _imageResizer;
-        private readonly IIconConverter _iconConverter;
-        private readonly AttributeChanger _attributeChanger;
-        private readonly DirectoryNameSanitizer _sanitizer;
+        readonly ImageRetrieverFactory _imageRetriever;
+        readonly ImageCropper _imageCropper;
+        readonly ImageResizer _imageResizer;
+        readonly IIconConverter _iconConverter;
+        readonly AttributeChanger _attributeChanger;
+        readonly DirectoryNameSanitizer _sanitizer;
 
-        public IconMaker(ImageRetrieverFactory imageRetriever,
-                         ImageCropper imageCropper, 
-                         ImageResizer imageResizer,
-                         IIconConverter iconConverter,
-                         AttributeChanger attribChanger,
-                         DirectoryNameSanitizer nameSanitizer)
+        public IconMaker(
+            ImageRetrieverFactory imageRetriever,
+            ImageCropper imageCropper, 
+            ImageResizer imageResizer,
+            IIconConverter iconConverter,
+            AttributeChanger attribChanger,
+            DirectoryNameSanitizer nameSanitizer)
         {
             _imageRetriever = imageRetriever;
             _imageCropper = imageCropper;
@@ -34,7 +32,7 @@ namespace FolderDesigner
 
         public void MakeIconByName(MediaType mediaType, string name, string destinationFilePath)
         {
-            name = _sanitizer.SanitizeDirectoryName(name);
+            name = _sanitizer.SanitizeDirectoryName(mediaType, name);
             _attributeChanger.RemoveAttributes(destinationFilePath, FileAttributes.System);
             _attributeChanger.RemoveAttributes(destinationFilePath, FileAttributes.Hidden);
             _imageRetriever.GetImageRetriever(mediaType).FindImageByName(name, destinationFilePath);
@@ -42,6 +40,5 @@ namespace FolderDesigner
             _imageResizer.ResizeImage(destinationFilePath, new Size(Config.IconSize, Config.IconSize), name);
             _iconConverter.ConvertToIcon(destinationFilePath);
         }
-
     }
 }

@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 
-namespace FolderDesigner
+namespace FolderDesigner.ImageRetrieval
 {
     public class TheTvDbRetriever : IImageRetriever
     {

@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace FolderDesigner.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private readonly FolderDecorator _folderDecorator;
-        private readonly FolderUndecorator _folderUndecorator;
-        private readonly IconCacheResetter _iconCacheResetter;
+        readonly FolderDecorator _folderDecorator;
+        readonly FolderUndecorator _folderUndecorator;
+        readonly IconCacheResetter _iconCacheResetter;
 
         public MainViewModel(
             FolderDecorator folderDecorator, 
             FolderUndecorator folderUndecorator,
             IconCacheResetter iconCacheResetter)
         {
-            SelectedMediaType = MediaType.Movie;
+            SelectedMediaType = MediaType.Music;
             ConsoleOutput = String.Empty;
-            CurrentDirectory = @"E:\Movies";
+            CurrentDirectory = @"E:\MusicTest";
             _folderDecorator = folderDecorator;
             _folderUndecorator = folderUndecorator;
             _iconCacheResetter = iconCacheResetter;
@@ -150,6 +144,8 @@ namespace FolderDesigner.ViewModels
             OnPropertyChanged("ConsoleOutput");
         }
 
+        public string ConsoleOutput { get; set; }
+
         private void WriteLineToConsole(string line, params string[] values)
         {
             WriteToConsole(line + System.Environment.NewLine, values);
@@ -161,8 +157,6 @@ namespace FolderDesigner.ViewModels
             OnPropertyChanged("ConsoleOutput");
         }
 
-        public string ConsoleOutput { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
@@ -172,7 +166,5 @@ namespace FolderDesigner.ViewModels
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-
     }
 }

@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolderDesigner
+﻿
+namespace FolderDesigner.ImageRetrieval
 {
     public class ImageRetrieverFactory
     {
-        private readonly TheTvDbRetriever _tvRetriever;
-        private readonly TheMovieDbRetriever _movieRetriever;
+        readonly TheTvDbRetriever _tvRetriever;
+        readonly TheMovieDbRetriever _movieRetriever;
+        readonly LastFmRetriever _musicRetriever;
 
         public ImageRetrieverFactory(
             TheTvDbRetriever tvRetriever,
-            TheMovieDbRetriever movieRetriever)
+            TheMovieDbRetriever movieRetriever,
+            LastFmRetriever musicRetriever)
         {
             _tvRetriever = tvRetriever;
             _movieRetriever = movieRetriever;
+            _musicRetriever = musicRetriever;
         }
 
         public IImageRetriever GetImageRetriever(MediaType mediaType)
@@ -25,12 +23,13 @@ namespace FolderDesigner
             {
                 case MediaType.Tv:
                     return _tvRetriever;
+                case MediaType.Music:
+                    return _musicRetriever;
                 case MediaType.Movie:
                 default:
                     return _movieRetriever;
                 
             }
         }
-
     }
 }

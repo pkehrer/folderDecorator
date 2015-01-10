@@ -1,11 +1,10 @@
 ﻿using System.Drawing;
 using System.IO;
 
-namespace FolderDesigner
+namespace FolderDesigner.ImageEditing
 {
     public class ImageCropper
     {
-
         public void CropImageSquare(string imagePath)
         {
             File.Copy(imagePath, Path.Combine(Path.GetDirectoryName(imagePath), "sourceImage.jpg"), true);
@@ -17,12 +16,14 @@ namespace FolderDesigner
                     : sourceImage.Height;
 
                 var cropRect = new Rectangle(0, 0, squareEdge, squareEdge);
-                var cropped = sourceImage.Clone(cropRect, sourceImage.PixelFormat);
-                cropped.Save(croppedImagePath);
+                using (var cropped = sourceImage.Clone(cropRect, sourceImage.PixelFormat))
+                {
+                    cropped.Save(croppedImagePath);
+                }
+                
             }
             File.Delete(imagePath);
             File.Move(croppedImagePath, imagePath);
         }
-
     }
 }

@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 
-namespace FolderDesigner
+namespace FolderDesigner.ImageEditing
 {
     public class ImageResizer
     {
@@ -26,7 +26,7 @@ namespace FolderDesigner
             var RoundedImage = new Bitmap(StartImage.Width, StartImage.Height);
             using (var g = Graphics.FromImage(RoundedImage))
             using (var gp = new GraphicsPath())
-            {   
+            {
                 var fontName = "Arial Black";
                 var textBrush = new SolidBrush(Color.White);
                 var fontSize = 11;
@@ -46,7 +46,7 @@ namespace FolderDesigner
                 var cornerRadius = 10;
                 var tabHeight = 15;
                 var tabWidth = System.Math.Max(stringlength + textPadding * 2, 90);
-                
+
                 g.Clear(Color.White);
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 var brush = new TextureBrush(StartImage);
@@ -63,6 +63,5 @@ namespace FolderDesigner
             }
             return RoundedImage;
         }
-
     }
 }

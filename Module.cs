@@ -1,11 +1,7 @@
 ﻿using Autofac;
-using Autofac.Core;
+using FolderDesigner.ImageEditing;
+using FolderDesigner.ImageRetrieval;
 using FolderDesigner.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderDesigner
 {
@@ -21,6 +17,7 @@ namespace FolderDesigner
             builder.RegisterType<IconMaker>().SingleInstance();
             builder.RegisterType<TheTvDbRetriever>().SingleInstance();
             builder.RegisterType<TheMovieDbRetriever>().SingleInstance();
+            builder.RegisterType<LastFmRetriever>().SingleInstance();
             builder.RegisterType<ImageRetrieverFactory>().SingleInstance();
             builder.RegisterType<ImageCropper>().SingleInstance();
             builder.RegisterType<ImageResizer>().SingleInstance();
@@ -31,6 +28,5 @@ namespace FolderDesigner
             builder.RegisterType<MainViewModel>();
             return builder.Build();
         }
-
     }
 }

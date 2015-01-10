@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderDesigner
 {
     public class FolderDecorator
     {
-        private readonly IconMaker _iconMaker;
-        private readonly FolderIconChanger _desktopIniMaker;
+        readonly IconMaker _iconMaker;
+        readonly FolderIconChanger _desktopIniMaker;
         
         public FolderDecorator(
             IconMaker iconMaker, 
@@ -41,6 +37,5 @@ namespace FolderDesigner
                 };
             }
         }
-
     }
 }

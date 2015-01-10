@@ -1,10 +1,5 @@
-; example2.nsi
-;
-; This script is based on example1.nsi, but it remember the directory, 
-; has uninstall support and (optionally) installs start menu shortcuts.
-;
-; It will install example2.nsi into a directory that the user selects,
-
+; Add the following to build tasks to buid:
+; "C:\Program Files (x86)\NSIS\Bin\makensis.exe" $(ProjectDir)$(OutDir)installscript.nsi
 ;--------------------------------
 
 ; The name of the installer
@@ -54,6 +49,8 @@ Section "FolderDecorator (required)"
  File Magick.NET-AnyCPU.xml
  File Newtonsoft.Json.dll
  File Newtonsoft.Json.xml
+ File vcredist_x64.exe
+ ExecWait '"$INSTDIR\vcredist_x64.exe"  /passive /norestart'
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\FolderDecorator "Install_Dir" "$INSTDIR"
