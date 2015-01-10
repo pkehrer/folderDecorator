@@ -100,8 +100,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="installscript.nsi">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Installer\GetWindowsVersion.nsi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Installer\installscript.nsi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Installer\WinVer.nsh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Installer\x64.nsh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -124,8 +133,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\NSIS\Bin\makensis.exe" $(ProjectDir)$(OutDir)Installer\installscript.nsi</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
