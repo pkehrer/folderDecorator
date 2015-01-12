@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -27,7 +28,7 @@ namespace FolderDesigner.ImageRetrieval
         }
 
 
-        public void FindImageByName(string seriesName, string destinationPath)
+        public Bitmap FindImageByName(string seriesName)
         {
             seriesName = seriesName.Replace(" ", "+");
             var url = GetUrlForSeriesByName(seriesName);
@@ -47,7 +48,7 @@ namespace FolderDesigner.ImageRetrieval
 
             var bannerRelativePath = node.SelectSingleNode("banner").FirstChild.Value;
             var bannerUrl = GetUrlForBannerByRelativePath(bannerRelativePath);
-            _webUtil.CopyUrlToFile(bannerUrl, destinationPath);
+            return _webUtil.GetBitmapFromUrl(bannerUrl);
         }
     }
 }

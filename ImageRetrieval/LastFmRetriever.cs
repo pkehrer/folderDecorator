@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace FolderDesigner.ImageRetrieval
@@ -18,7 +20,7 @@ namespace FolderDesigner.ImageRetrieval
             _webUtil = webUtil;
         }
 
-        public void FindImageByName(string albumName, string destinationPath)
+        public Bitmap FindImageByName(string albumName)
         {
             var jsonString = _webUtil.GetResponse(GetSearchUrl(albumName));
 
@@ -31,7 +33,7 @@ namespace FolderDesigner.ImageRetrieval
             if (albums == null || albums.Count() == 0) throw new Exception(string.Format("No results returned for search {0}", albumName));
 
             var imgUrl = albums.First["image"].First(i => i["size"].ToString() == "extralarge")["#text"].ToString();
-            _webUtil.CopyUrlToFile(imgUrl, destinationPath);
+            return _webUtil.GetBitmapFromUrl(imgUrl);
         }
 
         private string GetSearchUrl(string name)

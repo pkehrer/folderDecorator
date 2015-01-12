@@ -1,8 +1,10 @@
-﻿
+﻿using System.Drawing;
+using System.IO;
+
 namespace FolderDesigner.ImageRetrieval
 {
     public interface IImageRetriever
     {
-        void FindImageByName(string name, string destinationPath);
+        Bitmap FindImageByName(string name);
     }
 }

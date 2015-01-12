@@ -20,12 +20,13 @@ namespace FolderDesigner
 
         private string SanitizeMusicName(string directoryName)
         {
+            directoryName = directoryName.ToLower();
             directoryName = Regex.Replace(directoryName, @"\(.*\)", " ");
             directoryName = Regex.Replace(directoryName, @"\[.*\]", " ");
             directoryName = Regex.Replace(directoryName, @"\d{4}", " ");
-            directoryName = directoryName.Replace('-', ' ');
+            directoryName = Regex.Replace(directoryName, @"v\d+", " ");
+            directoryName = Regex.Replace(directoryName, @"[-_,.!]", " ");
             directoryName = Regex.Replace(directoryName, @"\s+", " ");
-            directoryName = directoryName.ToLower();
             directoryName = directoryName.Trim();
             return directoryName;
         }

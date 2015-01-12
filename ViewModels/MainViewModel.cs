@@ -19,9 +19,9 @@ namespace FolderDesigner.ViewModels
             FolderUndecorator folderUndecorator,
             IconCacheResetter iconCacheResetter)
         {
-            SelectedMediaType = MediaType.Music;
+            SelectedMediaType = Config.StartingMediaType;
             ConsoleOutput = String.Empty;
-            CurrentDirectory = @"E:\MusicTest";
+            CurrentDirectory = Config.StartingDirectory;
             _folderDecorator = folderDecorator;
             _folderUndecorator = folderUndecorator;
             _iconCacheResetter = iconCacheResetter;

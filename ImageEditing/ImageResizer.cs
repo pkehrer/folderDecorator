@@ -5,22 +5,17 @@ using System.IO;
 
 namespace FolderDesigner.ImageEditing
 {
-    public class ImageResizer
+    public class ImageResizer : IImageProcessor
     {
-        public void ResizeImage(string sourceImagePath, Size size, string folderTitle)
+        public Bitmap ProcessImage(Bitmap sourceImage, DecorationParameters parameters)
         {
-            var resizedPath = sourceImagePath + "_RESIZED";
-            using (var sourceImage = Image.FromFile(sourceImagePath))
-            using (var resized = new Bitmap(sourceImage, size))
-            using (var folderShape = DrawFolderShape(resized, folderTitle))
+            using (var resized = new Bitmap(sourceImage, new Size(Config.IconSize, Config.IconSize)))
             {
-                folderShape.Save(resizedPath);
+                return DrawFolderShape(resized, parameters.MediaName);
             }
-            File.Delete(sourceImagePath);
-            File.Move(resizedPath, sourceImagePath);
         }
 
-        private Image DrawFolderShape(Image StartImage, string folderTitle)
+        private Bitmap DrawFolderShape(Image StartImage, string folderTitle)
         {
             folderTitle = new CultureInfo("en-US", false).TextInfo.ToTitleCase(folderTitle);
             var RoundedImage = new Bitmap(StartImage.Width, StartImage.Height);

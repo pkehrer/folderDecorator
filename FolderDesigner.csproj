@@ -70,23 +70,23 @@
     </Compile>
     <Compile Include="BackgroundWorker.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="DecorationParameters.cs" />
+    <Compile Include="DecorationParametersFactory.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="DirectoryNameSanitizer.cs" />
+    <Compile Include="DirectoryUtil.cs" />
     <Compile Include="FolderDecorationResult.cs" />
     <Compile Include="FolderIconChanger.cs" />
     <Compile Include="FolderDecorator.cs" />
     <Compile Include="FolderUndecorators.cs" />
     <Compile Include="IconCacheResetter.cs" />
-    <Compile Include="ImageEditing\IIconConverter.cs" />
+    <Compile Include="IImageProcessor.cs" />
     <Compile Include="ImageEditing\ImageMagickIconConverter.cs" />
-    <Compile Include="ImageRetrieval\ImageRetrieverFactory.cs" />
     <Compile Include="ImageRetrieval\LastFmRetriever.cs" />
     <Compile Include="MediaType.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="ImageRetrieval\TheMovieDbRetriever.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ImageEditing\SimpleIconConverter.cs" />
-    <Compile Include="IconMaker.cs" />
     <Compile Include="ImageRetrieval\IImageRetriever.cs" />
     <Compile Include="ImageEditing\ImageCropper.cs" />
     <Compile Include="ImageEditing\ImageResizer.cs" />

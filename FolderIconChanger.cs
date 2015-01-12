@@ -13,11 +13,13 @@ namespace FolderDesigner
             _attributeChanger = attribChanger;
         }
 
-        public void CreateDesktopIni(string directoryPath, string relativeIconPath)
+        public void SetFileAsFolderIcon(string iconPath)
         {
+            var iconName = Path.GetFileName(iconPath);
+            var directoryPath = Path.GetDirectoryName(iconPath);
             var FolderSettings = new LPSHFOLDERCUSTOMSETTINGS();
             FolderSettings.dwMask = 0x10;
-            FolderSettings.pszIconFile = relativeIconPath;
+            FolderSettings.pszIconFile = iconName;
             FolderSettings.iIconIndex = 0;
 
             UInt32 FCS_READ = 0x00000001;
@@ -27,7 +29,7 @@ namespace FolderDesigner
             string pszPath = directoryPath;
             UInt32 HRESULT = SHGetSetFolderCustomSettings(ref FolderSettings, pszPath, FCS_FORCEWRITE);
 
-            _attributeChanger.AddAttributes(Path.Combine(directoryPath, "desktop.ini"), FileAttributes.Hidden);
+            _attributeChanger.AddAttributes(Path.Combine(directoryPath, Config.DesktopIniFilename), FileAttributes.Hidden);
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Auto)]

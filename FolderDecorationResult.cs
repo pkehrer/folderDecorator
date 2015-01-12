@@ -9,6 +9,25 @@ namespace FolderDesigner
         public bool Success { get; set; }
         public string ErrorMessage { get; set; }
 
+        public static FolderDecorationResult Successful(string directoryPath)
+        {
+            return new FolderDecorationResult
+            {
+                Success = true,
+                Directory = directoryPath
+            };
+        }
+
+        public static FolderDecorationResult Failed(string directoryPath, string error)
+        {
+            return new FolderDecorationResult
+            {
+                Success = false,
+                Directory = directoryPath,
+                ErrorMessage = error
+            };
+        }
+
         public override string ToString()
         {
             return Success 

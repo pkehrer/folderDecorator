@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace FolderDesigner.ImageRetrieval
@@ -19,7 +21,7 @@ namespace FolderDesigner.ImageRetrieval
             _webUtil = webUtil;
         }
 
-        public void FindImageByName(string name, string destinationPath)
+        public Bitmap FindImageByName(string name)
         {
             var searchUrl = GetSearchUrl(name);
 
@@ -35,7 +37,7 @@ namespace FolderDesigner.ImageRetrieval
             var posterPath = mostPopular["poster_path"].ToString();
 
             var posterUrl = GetImageUrl(posterPath);
-            _webUtil.CopyUrlToFile(posterUrl, destinationPath);
+            return _webUtil.GetBitmapFromUrl(posterUrl);
         }
 
         private string GetSearchUrl(string movieName)

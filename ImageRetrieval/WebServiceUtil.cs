@@ -1,10 +1,19 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Net;
 
 namespace FolderDesigner.ImageRetrieval
 {
     public class WebServiceUtil
     {
+        public Bitmap GetBitmapFromUrl(string url)
+        {
+            var request = (HttpWebRequest)HttpWebRequest.Create(url);
+            request.AllowWriteStreamBuffering = true;
+            var stream = request.GetResponse().GetResponseStream();
+            return Image.FromStream(stream) as Bitmap;
+        }
+
         public void CopyUrlToFile(string url, string filePath)
         {
             using (var wc = new WebClient())

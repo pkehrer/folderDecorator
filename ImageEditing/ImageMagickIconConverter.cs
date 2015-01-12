@@ -1,19 +1,25 @@
 ﻿using ImageMagick;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace FolderDesigner.ImageEditing
 {
-    public class ImageMagickIconConverter : IIconConverter
+    public class ImageMagickIconConverter
     {
-        public void ConvertToIcon(string sourceImage)
+        public void ConvertToIcon(Bitmap sourceImage, string iconpath)
         {
-            var tempFile = Path.GetDirectoryName(sourceImage) + @"\temp.ico";
-            using (var image = new MagickImage(sourceImage))
+            using (var sourceStream = new MemoryStream())
             {
-                image.Write(tempFile);
-            }
-            File.Delete(sourceImage);
-            File.Move(tempFile, sourceImage);
+                sourceImage.Save(sourceStream, ImageFormat.Jpeg);
+                sourceStream.Position = 0;
+                using (var image = new MagickImage(sourceStream, new MagickReadSettings { Format = MagickFormat.Jpeg }))
+                {
+                    image.Write(iconpath);
+                }
+            }            
         }
+
     }
 }
